@@ -7,6 +7,47 @@
     <script src="main.js" defer></script>
 </head>
 <body>
-    <h1 class="test">Webpack test</h1>
+    <div class="container">
+        <nav>
+            <h2>Projects</h2>
+            <ul class="projects-list">
+                <li><a href="#">To Do</a></li>
+            </ul>
+        </nav>
+        <main>
+            <div class="current-list">
+                <h2 class="list-name">To Do</h2>
+                <button type="button" id="add-new-task">&#43;</button>
+            </div>
+            <div class="task">
+                <h3>Task</h3>
+                <input type="text" name="title" id="title" placeholder="Task title">
+                <textarea name="description" id="description" cols="30" rows="6" placeholder="Description"></textarea>
+                <div class="task-item">
+                    <label for="list">List:</label>
+                    <select name="list" id="list">
+                        <option value="">Pick a list</option>
+                        <option value="to-do">To Do</option>
+                    </select>
+                </div>
+                <div class="task-item">
+                    <label for="due-date">Due Date:</label>
+                    <input type="date" name="due-date" id="due-date">
+                </div>
+                <h3>Checklist</h3>
+                <ul class="checklist-list">
+                    <li>
+                        <input type="checkbox" name="check-test" id="check-test">
+                        <label for="check-test">First checkbox test</label>
+                    </li>
+                    <button type="button" id="new-checklist-item">&#43;</button>
+                </ul>
+                <div class="buttons">
+                    <button type="button" id="delete">Delete</button>
+                    <button type="button" id="save-change">Save Change</button>
+                </div>
+            </div>
+        </main>        
+    </div>
 </body>
 </html>

@@ -1,9 +1,134 @@
+:root {
+    --nav-width: 220px;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-.test {
-    color: tomato;
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Nav bar */
+
+nav {
+    position: fixed;
+    width: var(--nav-width);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    background-color: whitesmoke;
+    padding: 16px;
+}
+
+/* Main */
+
+main {
+    margin-left: calc(var(--nav-width) + 16px);
+    padding: 16px;
+    display: flex;
+    height: 100vh;
+    gap: 32px;
+}
+
+/* To do list */
+
+.current-list {
+    position: relative;
+    background-color: blueviolet;
+    padding: 16px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#add-new-task {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    font-weight: bold;
+    font-size: 2.6rem;
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    background-color: lightskyblue;
+    color: white;
+}
+
+#add-new-task:hover {
+    background-color: white;
+    color: black;
+}
+
+/* New task */
+
+.task {
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    border-radius: 8px;
+    width: 480px;
+}
+
+.task-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.task-item :nth-child(1) {
+    flex-basis: 80px;
+}
+
+.task-item :nth-child(2) {
+    flex-grow: 1;
+}
+
+.task input,
+.task textarea,
+.task select {
+    padding: 4px;
+    font-size: 1rem;
+}
+
+.task .buttons {
+    margin-top: auto;
+    display: flex;
+    gap: 16px;
+}
+
+.task .buttons * {
+    flex: 1;
+    padding-block:12px;
+    font-size: 1rem;
+    font-weight: bold;
+    background: tomato;
+    border: none;
+    border-radius: 8px;
+}
+
+.task #save-change {
+    background-color: lime;
+}
+
+.checklist-list {
+    list-style: none;
+    padding-inline: 16px;
+}
+
+.checklist-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checklist-list input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
 }
