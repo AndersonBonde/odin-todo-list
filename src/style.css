@@ -55,6 +55,7 @@ nav h3 {
 #add-new-list:hover {
     background-color: black;
     color: white;
+    cursor: pointer;
 }
 
 nav a {
@@ -108,6 +109,7 @@ main {
 #add-new-task:hover {
     background-color: white;
     color: black;
+    cursor: pointer;
 }
 
 /* New task */
@@ -154,13 +156,28 @@ main {
     padding-block:12px;
     font-size: 1rem;
     font-weight: bold;
-    background: tomato;
     border: none;
     border-radius: 8px;
 }
 
+.task #delete {
+    background: tomato;
+}
+
+#delete:hover {
+    outline: 2px solid tomato;
+    background-color: white;
+    cursor: pointer;
+}
+
 .task #save-change {
     background-color: lime;
+}
+
+#save-change:hover {
+    outline: 2px solid lime;
+    background-color: white;
+    cursor: pointer;
 }
 
 .checklist-list {
@@ -177,4 +194,29 @@ main {
 .checklist-list input[type="checkbox"] {
     width: 18px;
     height: 18px;
+}
+
+.checklist-list input[type="checkbox"]:hover {
+    cursor: pointer;
+}
+
+#new-checklist-item {
+    width: 20px;
+    height: 20px;
+    border: none;
+    background-color: #ccc;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: 16px;
+    margin-inline: 16px;
+}
+
+#new-checklist-item:hover {
+    outline: 2px solid black;
+    cursor: pointer;
+}
+
+#new-checklist-item + span {
+    color: #949494;
 }
