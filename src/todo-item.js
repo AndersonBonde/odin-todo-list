@@ -1,4 +1,4 @@
-export default todoItem = (title, description) => {
+const todoItem = (title, description) => {
     const getTitle = () => title;
     const getDescription = () => description;
 
@@ -12,3 +12,5 @@ export default todoItem = (title, description) => {
         modifyDescription
     }
 } 
+
+export default todoItem;
