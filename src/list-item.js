@@ -1,31 +1,49 @@
 const listItem = (todoItem) => {
-    const container = document.createElement("div");
-    const title = document.createElement("h3");
-    const description = document.createElement("p");
-    const buttonContainer = document.createElement("div");
-    const deleteButton = document.createElement("button");
-    const viewButton = document.createElement("button");
+    const elements = createElements();
+
+    addClasses(elements);
+    parentChildStructure(elements);
+    addText(elements, todoItem);
+
+    return elements.container;
+}
+
+function createElements() {
+    const obj = {};
+
+    obj.container = document.createElement("div");
+    obj.title = document.createElement("h3");
+    obj.description = document.createElement("p");
+    obj.buttonContainer = document.createElement("div");
+    obj.deleteButton = document.createElement("button");
+    obj.viewButton = document.createElement("button");
+
+    return obj;
+}
+
+function addClasses(obj) {
+    obj.container.classList.add("list-item");
+    obj.title.classList.add("list-item-title");
+    obj.description.classList.add("list-item-description");
+    obj.buttonContainer.classList.add("list-item-buttons");
+    obj.deleteButton.classList.add("list-item-delete");
+    obj.viewButton.classList.add("list-item-view");
+}
+
+function parentChildStructure(obj) {
+    obj.container.appendChild(obj.title);
+    obj.container.appendChild(obj.description);
+    obj.container.appendChild(obj.buttonContainer);
     
-    container.classList.add("list-item");
-    title.classList.add("list-item-title");
-    description.classList.add("list-item-description");
-    buttonContainer.classList.add("list-item-buttons");
-    deleteButton.classList.add("list-item-delete");
-    viewButton.classList.add("list-item-view");
+    obj.buttonContainer.appendChild(obj.deleteButton);
+    obj.buttonContainer.appendChild(obj.viewButton);
+}
 
-    container.appendChild(title);
-    container.appendChild(description);
-    container.appendChild(buttonContainer);
-    
-    buttonContainer.appendChild(deleteButton);
-    buttonContainer.appendChild(viewButton);
-
-    title.textContent = todoItem.getTitle();
-    description.textContent = todoItem.getDescription();
-    deleteButton.textContent = "Delete";
-    viewButton.textContent = "View";
-
-    return container;
+function addText(obj, item) {
+    obj.title.textContent = item.getTitle();
+    obj.description.textContent = item.getDescription();
+    obj.deleteButton.textContent = "Delete";
+    obj.viewButton.textContent = "View";
 }
 
 export default listItem;

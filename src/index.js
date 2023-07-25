@@ -22,10 +22,8 @@ function closeNewTaskCard() {
 
 function addNewTask() {
     let item = todoItem("Test Item", "Testing to see if adding a new task is working as intended.");
-    console.log(`Item: ${item}`);
 
     let newListItem = listItem(item);
-    console.log(`List Item: ${newListItem}`);
 
     currentList.appendChild(newListItem);
 }
