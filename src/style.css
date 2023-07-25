@@ -90,6 +90,11 @@ main {
     flex: 1;
     display: flex;
     flex-direction: column;
+    gap: 4px;
+}
+
+.current-list h2 {
+    margin-bottom: 8px;
 }
 
 #add-new-task {
@@ -109,6 +114,50 @@ main {
 #add-new-task:hover {
     background-color: white;
     color: black;
+    cursor: pointer;
+}
+
+/* List item */
+
+.list-item {
+    background-color: whitesmoke;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-radius: 8px;
+}
+
+.list-item > h3 {
+    border-bottom: 1px solid #ccc;
+}
+
+.list-item button {
+    width: 60px;
+    padding: 4px;    
+}
+
+.list-item-delete {
+    background-color: tomato;
+    border: none;
+    border-radius: 6px;
+}
+
+.list-item-delete:hover {
+    outline: 1px solid tomato;
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+
+.list-item-view {
+    background-color: gold;
+    border: none;
+    border-radius: 6px;
+}
+
+.list-item-view:hover {
+    outline: 1px solid gold;
+    background-color: whitesmoke;
     cursor: pointer;
 }
 
