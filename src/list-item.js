@@ -1,29 +1,31 @@
 const listItem = (todoItem) => {
-    const elements = createListItemElements();
+    const container = document.createElement("div");
+    const title = document.createElement("h3");
+    const description = document.createElement("p");
+    const buttonContainer = document.createElement("div");
+    const deleteButton = document.createElement("button");
+    const viewButton = document.createElement("button");
     
-    addClasses(elements);
-}
+    container.classList.add("list-item");
+    title.classList.add("list-item-title");
+    description.classList.add("list-item-description");
+    buttonContainer.classList.add("list-item-buttons");
+    deleteButton.classList.add("list-item-delete");
+    viewButton.classList.add("list-item-view");
 
-function createListItemElements() {
-    const obj = {};
+    container.appendChild(title);
+    container.appendChild(description);
+    container.appendChild(buttonContainer);
     
-    obj.container = document.createElement("div");
-    obj.title = document.createElement("h3");
-    obj.description = document.createElement("p");
-    obj.buttonContainer = document.createElement("div");
-    obj.deleteButton = document.createElement("button");
-    obj.viewButton = document.createElement("button");
-    
-    return obj;
-}
+    buttonContainer.appendChild(deleteButton);
+    buttonContainer.appendChild(viewButton);
 
-function addClasses(obj) {
-    obj.container.classList.add("list-item");
-    obj.title.classList.add("list-item-title");
-    obj.description.classList.add("list-item-description");
-    obj.buttonContainer.classList.add("list-item-buttons");
-    obj.deleteButton.classList.add("list-item-delete");
-    obj.viewButton.classList.add("list-item-view");
+    title.textContent = todoItem.getTitle();
+    description.textContent = todoItem.getDescription();
+    deleteButton.textContent = "Delete";
+    viewButton.textContent = "View";
+
+    return container;
 }
 
 export default listItem;

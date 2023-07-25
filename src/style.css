@@ -132,6 +132,11 @@ main {
     border-bottom: 1px solid #ccc;
 }
 
+.list-item-buttons {
+    display: flex;
+    gap: 4px;
+}
+
 .list-item button {
     width: 60px;
     padding: 4px;    
