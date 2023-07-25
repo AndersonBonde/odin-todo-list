@@ -24,6 +24,52 @@ nav {
     padding: 16px;
 }
 
+nav h2 {
+    margin-bottom: 16px;
+}
+
+nav ul {
+    list-style: none;
+    padding-block: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+nav h3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#add-new-list {
+    width: 30px;
+    height: 30px;
+    font-weight: bold;
+    font-size: 24px;
+    border: none;
+    background-color: lightskyblue;
+    border-radius: 50%;
+}
+
+#add-new-list:hover {
+    background-color: black;
+    color: white;
+}
+
+nav a {
+    display: inline-block;
+    width: 100%;
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    padding: 4px 16px;
+}
+
+nav a:hover {
+    background-color: #ccc;
+}
+
 /* Main */
 
 main {
