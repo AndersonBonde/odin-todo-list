@@ -3,11 +3,14 @@ import todoItem from "./todo-item";
 
 const displayController = (() => {
     const cache = cacheDOM();
+    let currentDisplayedItem = undefined;
 
     addListeners(cache);
 
     return {
-        cache
+        cache,
+        currentDisplayedItem,
+        openTaskCard
     }
 })();
 
@@ -29,15 +32,20 @@ function cacheDOM() {
 }
 
 function addListeners(obj) {
-    obj.addNewTaskButton.addEventListener("click", openTaskCard.bind(null, obj));
+    obj.addNewTaskButton.addEventListener("click", openTaskCard.bind(null, obj, undefined));
     obj.taskDeleteButton.addEventListener("click", closeTaskCard.bind(null, obj));
     obj.taskSaveChangeButton.addEventListener("click", createNewListItem.bind(null, obj));
 }
 
-function openTaskCard(obj) {
+function openTaskCard(obj, item) {
     clearTaskCard(obj);
     
     obj.newTaskCard.style.display = "flex";
+
+    if(item !== undefined) {
+        loadItemToCard(obj, item);
+        displayController.currentDisplayedItem = item;
+    }
 }
 
 function clearTaskCard(obj) {
@@ -45,10 +53,34 @@ function clearTaskCard(obj) {
     obj.taskDescriptionField.value = "";
     obj.taskListField.value = "";
     obj.taskDateField.value = "";
+
+    displayController.currentDisplayedItem = undefined;
+}
+
+function loadItemToCard(obj, item) {
+    obj.taskTitleField.value = item.getTitle();
+    obj.taskDescriptionField.value = item.getDescription();
 }
 
 function closeTaskCard(obj) {
+    if(displayController.currentDisplayedItem != undefined) {
+        deleteOpenedTask();
+    }
+
     obj.newTaskCard.style.display = "none";
+    displayController.currentDisplayedItem = undefined;
+}
+
+function deleteOpenedTask() {
+    let target = findOpenedItem(displayController.currentDisplayedItem);
+
+    displayController.cache.currentList.removeChild(target);
+}
+
+function findOpenedItem(item) {
+    let allTasks = document.querySelectorAll(".list-item");
+
+    return Array.from(allTasks).find(curr => curr.dataset.item == item);
 }
 
 function createNewListItem(obj) {
@@ -69,11 +101,3 @@ export default displayController;
 
 // Initial page load;
 displayController.cache.newTaskCard.style.display = "none";
-
-// function addNewTask() {
-//     let item = todoItem("Test Item", "Testing to see if adding a new task is working as intended.");
-
-//     let newListItem = listItem(item);
-
-//     currentList.appendChild(newListItem);
-// }

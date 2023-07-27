@@ -1,9 +1,13 @@
+import displayController from "./displayController";
+
 const listItem = (todoItem) => {
     const elements = createElements();
+    const _item = todoItem;
 
-    addClasses(elements);
+    addClassesAndData(elements, _item);
     parentChildStructure(elements);
     addText(elements, todoItem);
+    addListenersToButtons(elements, _item);
 
     return elements.container;
 }
@@ -21,8 +25,10 @@ function createElements() {
     return obj;
 }
 
-function addClasses(obj) {
+function addClassesAndData(obj, item) {
     obj.container.classList.add("list-item");
+    obj.container.dataset.item = item;
+
     obj.title.classList.add("list-item-title");
     obj.description.classList.add("list-item-description");
     obj.buttonContainer.classList.add("list-item-buttons");
@@ -44,6 +50,21 @@ function addText(obj, item) {
     obj.description.textContent = item.getDescription();
     obj.deleteButton.textContent = "Delete";
     obj.viewButton.textContent = "View";
+}
+
+function addListenersToButtons(obj, item) {
+    obj.deleteButton.addEventListener("click", deleteSelf.bind(null, obj));
+    obj.viewButton.addEventListener("click", displaySelf.bind(null, obj, item));
+}
+
+function deleteSelf(obj) {
+    let parent = obj.deleteButton.closest(".list-item");
+    displayController.cache.currentList.removeChild(parent);
+}
+
+function displaySelf(obj, item) {
+    displayController.openTaskCard(displayController.cache, item);
+    displayController.currentDisplayedItem = item;
 }
 
 export default listItem;
