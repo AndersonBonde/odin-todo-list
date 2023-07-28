@@ -1,5 +1,6 @@
 import listItem from "./list-item";
 import todoItem from "./todo-item";
+import events from "./events.js";
 
 const displayController = (() => {
     const cache = cacheDOM();
