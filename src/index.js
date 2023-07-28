@@ -1,7 +1,7 @@
 import "./style.css";
-import todoItem from "./todo-item.js";
-import listItem from "./list-item.js";
-import displayController from "./displayController.js";
+import todoItem from "./todo-item";
+import listItem from "./list-item";
+import displayController from "./displayController";
 
 // Create placeholder item-list for testing
 let newItem = todoItem("Placeholder", "Description for the placeholder task.");

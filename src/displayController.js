@@ -1,6 +1,6 @@
 import listItem from "./list-item";
 import todoItem from "./todo-item";
-import events from "./events.js";
+import events from "./events";
 
 const displayController = (() => {
     const cache = cacheDOM();
@@ -28,6 +28,9 @@ const displayController = (() => {
         obj.addNewTaskButton.addEventListener("click", openCleanTaskCard.bind(null, obj));
         obj.taskDeleteButton.addEventListener("click", closeTaskCard.bind(null, obj));
         obj.taskSaveChangeButton.addEventListener("click", handleSaveChange.bind(null, obj));
+
+        events.on("viewItem", openTaskCardWithInfo.bind(null, obj));
+        events.on("deleteItem", deleteTask);
     }
     
     function openCleanTaskCard(obj) {
@@ -38,7 +41,7 @@ const displayController = (() => {
     
     function openTaskCardWithInfo(obj, id, item) {
         clearTaskCard(obj);
-    
+        
         obj.newTaskCard.style.display = "flex";
     
         loadItemToCard(obj, item);
@@ -67,6 +70,12 @@ const displayController = (() => {
         obj.newTaskCard.style.display = "none";
         displayController.currentDisplayedItemId = undefined;
     }
+
+    function deleteTask(id) {
+        let target = findOpenedItem(id);
+
+        displayController.cache.currentList.removeChild(target);
+    }
     
     function deleteOpenedTask() {
         let target = findOpenedItem();
@@ -74,8 +83,10 @@ const displayController = (() => {
         displayController.cache.currentList.removeChild(target);
     }
     
-    function findOpenedItem() {
-        let id = displayController.currentDisplayedItemId;
+    function findOpenedItem(id) {
+        if(id == undefined) {
+            id = displayController.currentDisplayedItemId;
+        }
         let allTasks = document.querySelectorAll(".list-item");
     
         return Array.from(allTasks).find(curr => curr.dataset.id == id);

@@ -1,14 +1,14 @@
-import displayController from "./displayController";
+import events from "./events";
 
 const listItem = (todoItem) => {
     const elements = createElements();
-    const item = todoItem;
-    const id = item.getTitle();
+    const _item = todoItem;
+    const _id = `${_item.getTitle()} ${_item.getDescription()}`;
 
-    addClassesAndData(elements, id);
-    parentChildStructure(elements);
-    addText(elements, todoItem);
-    addListenersToButtons(elements, id, todoItem);
+    addClassesAndData();
+    parentChildStructure();
+    addText();
+    addListenersToButtons();
     
     function createElements() {
         const obj = {};
@@ -23,45 +23,44 @@ const listItem = (todoItem) => {
         return obj;
     }
     
-    function addClassesAndData(obj, id) {
-        obj.container.classList.add("list-item");
-        obj.container.dataset.id = id;
+    function addClassesAndData() {
+        elements.container.classList.add("list-item");
+        elements.container.dataset.id = _id;
     
-        obj.title.classList.add("list-item-title");
-        obj.description.classList.add("list-item-description");
-        obj.buttonContainer.classList.add("list-item-buttons");
-        obj.deleteButton.classList.add("list-item-delete");
-        obj.viewButton.classList.add("list-item-view");
+        elements.title.classList.add("list-item-title");
+        elements.description.classList.add("list-item-description");
+        elements.buttonContainer.classList.add("list-item-buttons");
+        elements.deleteButton.classList.add("list-item-delete");
+        elements.viewButton.classList.add("list-item-view");
     }
     
-    function parentChildStructure(obj) {
-        obj.container.appendChild(obj.title);
-        obj.container.appendChild(obj.description);
-        obj.container.appendChild(obj.buttonContainer);
+    function parentChildStructure() {
+        elements.container.appendChild(elements.title);
+        elements.container.appendChild(elements.description);
+        elements.container.appendChild(elements.buttonContainer);
         
-        obj.buttonContainer.appendChild(obj.deleteButton);
-        obj.buttonContainer.appendChild(obj.viewButton);
+        elements.buttonContainer.appendChild(elements.deleteButton);
+        elements.buttonContainer.appendChild(elements.viewButton);
     }
     
-    function addText(obj, item) {
-        obj.title.textContent = item.getTitle();
-        obj.description.textContent = item.getDescription();
-        obj.deleteButton.textContent = "Delete";
-        obj.viewButton.textContent = "View";
+    function addText() {
+        elements.title.textContent = _item.getTitle();
+        elements.description.textContent = _item.getDescription();
+        elements.deleteButton.textContent = "Delete";
+        elements.viewButton.textContent = "View";
     }
     
-    function addListenersToButtons(obj, id, item) {
-        obj.deleteButton.addEventListener("click", deleteSelf.bind(null, obj));
-        obj.viewButton.addEventListener("click", displaySelf.bind(null, obj, id, item));
+    function addListenersToButtons() {
+        elements.deleteButton.addEventListener("click", deleteSelf);
+        elements.viewButton.addEventListener("click", displaySelf);
     }
     
-    function deleteSelf(obj) {
-        let parent = obj.deleteButton.closest(".list-item");
-        displayController.cache.currentList.removeChild(parent);
+    function deleteSelf() {
+        events.emit("deleteItem", _id);
     }
     
-    function displaySelf(obj, id, item) {
-        displayController.openTaskCardWithInfo(displayController.cache, id, item);
+    function displaySelf() {
+        events.emit("viewItem", _id, _item);
     }
 
     return elements.container;

@@ -16,10 +16,10 @@ const events = (() => {
             };
         }
     };
-    module.emit = (eventName, data) => {
+    module.emit = (eventName, ...data) => {
         if(_events[eventName]) {
             _events[eventName].forEach(fn => {
-                fn(data);
+                fn(...data);
             });
         }
     };
