@@ -1,12 +1,27 @@
 import listItem from "./list-item";
 import todoItem from "./todo-item";
+import list from "./list";
 import events from "./events";
 
 const displayController = (() => {
     const cache = cacheDOM();
     let _currentDisplayedItemId = undefined;
+    let _currentList = undefined;
+    let _allLists = [];
 
     addListeners();
+
+    (function initialPageLoad() {
+        cache.newTaskCard.style.display = "none";
+        _currentList = list();
+        _allLists.push(_currentList);
+
+        // Placeholder for test
+        let newItem = todoItem("Placeholder", "Description for the placeholder task.");
+        let newListItem = listItem(newItem);
+        _currentList.items.push(newListItem);
+        cache.currentList.appendChild(newListItem.container);
+    })();
     
     function cacheDOM() {
         const obj = {};
@@ -74,13 +89,21 @@ const displayController = (() => {
     function deleteTask(id) {
         let target = findOpenedItem(id);
 
+        removeTaskFromList(target);
+
         cache.currentList.removeChild(target);
     }
     
     function deleteOpenedTask() {
         let target = findOpenedItem();
-    
+
+        removeTaskFromList(target);
+        
         cache.currentList.removeChild(target);
+    }
+
+    function removeTaskFromList(item) {
+        events.emit("listItemDeleted", item.dataset.id);
     }
     
     function findOpenedItem(id) {
@@ -115,18 +138,13 @@ const displayController = (() => {
             let newItem = todoItem(newTitle, newDesc);
             let newListItem = listItem(newItem);
         
-            cache.currentList.appendChild(newListItem);
+            cache.currentList.appendChild(newListItem.container);
+
+            events.emit("listItemCreated", newListItem);
         }
     
         closeTaskCard();
     }
-
-    return {
-        cache
-    }
 })();
 
 export default displayController;
-
-// Initial page load;
-displayController.cache.newTaskCard.style.display = "none";

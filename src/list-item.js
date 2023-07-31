@@ -2,8 +2,8 @@ import events from "./events";
 
 const listItem = (todoItem) => {
     const elements = createElements();
-    const _item = todoItem;
-    const _id = `${_item.getTitle()} ${_item.getDescription()}`;
+    const item = todoItem;
+    const id = `${item.getTitle()} ${item.getDescription()}`;
 
     addClassesAndData();
     parentChildStructure();
@@ -25,7 +25,7 @@ const listItem = (todoItem) => {
     
     function addClassesAndData() {
         elements.container.classList.add("list-item");
-        elements.container.dataset.id = _id;
+        elements.container.dataset.id = id;
     
         elements.title.classList.add("list-item-title");
         elements.description.classList.add("list-item-description");
@@ -44,8 +44,8 @@ const listItem = (todoItem) => {
     }
     
     function addText() {
-        elements.title.textContent = _item.getTitle();
-        elements.description.textContent = _item.getDescription();
+        elements.title.textContent = item.getTitle();
+        elements.description.textContent = item.getDescription();
         elements.deleteButton.textContent = "Delete";
         elements.viewButton.textContent = "View";
     }
@@ -56,14 +56,18 @@ const listItem = (todoItem) => {
     }
     
     function deleteSelf() {
-        events.emit("deleteItem", _id);
+        events.emit("deleteItem", id);
     }
     
     function displaySelf() {
-        events.emit("viewItem", _id, _item);
+        events.emit("viewItem", id, item);
     }
 
-    return elements.container;
+    return {
+        container: elements.container,
+        item,
+        id
+    }
 }
 
 export default listItem;
