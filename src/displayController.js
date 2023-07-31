@@ -125,9 +125,13 @@ const displayController = (() => {
 
     function modifyCurrentItem() {
         let target = findOpenedItem();
-        let item = target.dataset.item;
-
-        console.log(item.getDescription());
+        
+        let currItemIndex = _currentList.items.findIndex(curr => curr.id == target.dataset.id);
+        
+        _currentList.items.splice(currItemIndex, 1);
+        
+        closeTaskCard();
+        createNewListItem();
     }
     
     function createNewListItem() {

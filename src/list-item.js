@@ -3,7 +3,7 @@ import events from "./events";
 const listItem = (todoItem) => {
     const elements = createElements();
     const item = todoItem;
-    const id = `${item.getTitle()} ${item.getDescription()}`;
+    let id = `${item.getTitle()} ${item.getDescription()}`;
 
     addClassesAndData();
     parentChildStructure();

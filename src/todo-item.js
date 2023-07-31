@@ -1,15 +1,13 @@
 const todoItem = (title, description) => {
-    const getTitle = () => title;
-    const getDescription = () => description;
+    let _title = title;
+    let _description = description; 
 
-    const modifyTitle = (newTitle) => title = newTitle;
-    const modifyDescription = (newDesc) => description = newDesc;
+    const getTitle = () => _title;
+    const getDescription = () => _description;
 
     return {
         getTitle,
-        getDescription,
-        modifyTitle,
-        modifyDescription
+        getDescription
     }
 } 
 
