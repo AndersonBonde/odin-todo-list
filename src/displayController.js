@@ -4,9 +4,9 @@ import events from "./events";
 
 const displayController = (() => {
     const cache = cacheDOM();
-    let currentDisplayedItemId = undefined;
+    let _currentDisplayedItemId = undefined;
 
-    addListeners(cache);
+    addListeners();
     
     function cacheDOM() {
         const obj = {};
@@ -24,79 +24,79 @@ const displayController = (() => {
         return obj;
     }
     
-    function addListeners(obj) {
-        obj.addNewTaskButton.addEventListener("click", openCleanTaskCard.bind(null, obj));
-        obj.taskDeleteButton.addEventListener("click", closeTaskCard.bind(null, obj));
-        obj.taskSaveChangeButton.addEventListener("click", handleSaveChange.bind(null, obj));
+    function addListeners() {
+        cache.addNewTaskButton.addEventListener("click", openCleanTaskCard);
+        cache.taskDeleteButton.addEventListener("click", closeTaskCard);
+        cache.taskSaveChangeButton.addEventListener("click", handleSaveChange);
 
-        events.on("viewItem", openTaskCardWithInfo.bind(null, obj));
+        events.on("viewItem", openTaskCardWithInfo);
         events.on("deleteItem", deleteTask);
     }
     
-    function openCleanTaskCard(obj) {
-        clearTaskCard(obj);
+    function openCleanTaskCard() {
+        clearTaskCard();
         
-        obj.newTaskCard.style.display = "flex";
+        cache.newTaskCard.style.display = "flex";
     }
     
-    function openTaskCardWithInfo(obj, id, item) {
-        clearTaskCard(obj);
+    function openTaskCardWithInfo(id, item) {
+        clearTaskCard();
         
-        obj.newTaskCard.style.display = "flex";
+        cache.newTaskCard.style.display = "flex";
     
-        loadItemToCard(obj, item);
-        displayController.currentDisplayedItemId = id;
+        loadItemToCard(item);
+        _currentDisplayedItemId = id;
     }
     
-    function clearTaskCard(obj) {
-        obj.taskTitleField.value = "";
-        obj.taskDescriptionField.value = "";
-        obj.taskListField.value = "";
-        obj.taskDateField.value = "";
+    function clearTaskCard() {
+        cache.taskTitleField.value = "";
+        cache.taskDescriptionField.value = "";
+        cache.taskListField.value = "";
+        cache.taskDateField.value = "";
     
-        displayController.currentDisplayedItemId = undefined;
+        _currentDisplayedItemId = undefined;
     }
     
-    function loadItemToCard(obj, item) {
-        obj.taskTitleField.value = item.getTitle();
-        obj.taskDescriptionField.value = item.getDescription();
+    function loadItemToCard(item) {
+        cache.taskTitleField.value = item.getTitle();
+        cache.taskDescriptionField.value = item.getDescription();
     }
     
-    function closeTaskCard(obj) {
-        if(displayController.currentDisplayedItemId != undefined) {
+    function closeTaskCard() {
+        if(_currentDisplayedItemId != undefined) {
             deleteOpenedTask();
         }
     
-        obj.newTaskCard.style.display = "none";
-        displayController.currentDisplayedItemId = undefined;
+        cache.newTaskCard.style.display = "none";
+        _currentDisplayedItemId = undefined;
     }
 
     function deleteTask(id) {
         let target = findOpenedItem(id);
 
-        displayController.cache.currentList.removeChild(target);
+        cache.currentList.removeChild(target);
     }
     
     function deleteOpenedTask() {
         let target = findOpenedItem();
     
-        displayController.cache.currentList.removeChild(target);
+        cache.currentList.removeChild(target);
     }
     
     function findOpenedItem(id) {
         if(id == undefined) {
-            id = displayController.currentDisplayedItemId;
+            id = _currentDisplayedItemId;
         }
         let allTasks = document.querySelectorAll(".list-item");
     
         return Array.from(allTasks).find(curr => curr.dataset.id == id);
     }
     
-    function handleSaveChange(obj) {
-        if(displayController.currentDisplayedItemId != undefined) {
+    function handleSaveChange() {
+        if(_currentDisplayedItemId != undefined) {
             modifyCurrentItem();
         } else {
-            createNewListItem(obj);
+            createNewListItem();
         }
     }
 
@@ -107,24 +107,22 @@ const displayController = (() => {
         console.log(item.getDescription());
     }
     
-    function createNewListItem(obj) {
-        let newTitle = obj.taskTitleField.value;
-        let newDesc = obj.taskDescriptionField.value;
+    function createNewListItem() {
+        let newTitle = cache.taskTitleField.value;
+        let newDesc = cache.taskDescriptionField.value;
     
         if(newTitle != "") {
             let newItem = todoItem(newTitle, newDesc);
             let newListItem = listItem(newItem);
         
-            obj.currentList.appendChild(newListItem);
+            cache.currentList.appendChild(newListItem);
         }
     
-        closeTaskCard(obj);
+        closeTaskCard();
     }
 
     return {
-        cache,
-        currentDisplayedItemId,
-        openTaskCardWithInfo
+        cache
     }
 })();
 
