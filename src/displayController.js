@@ -13,8 +13,9 @@ const displayController = (() => {
 
     (function initialPageLoad() {
         cache.newTaskCard.style.display = "none";
-        _currentList = list();
+        _currentList = list("To Do");
         _allLists.push(_currentList);
+        populateNavBarList();
 
         // Placeholder for test
         let newItem = todoItem("Placeholder", "Description for the placeholder task.");
@@ -26,6 +27,7 @@ const displayController = (() => {
     function cacheDOM() {
         const obj = {};
     
+        obj.projectsList = document.querySelector(".projects-list");
         obj.currentList = document.querySelector(".current-list");
         obj.addNewTaskButton = document.querySelector("#add-new-task");
         obj.newTaskCard = document.querySelector(".task");
@@ -134,13 +136,28 @@ const displayController = (() => {
         if(newTitle != "") {
             let newItem = todoItem(newTitle, newDesc);
             let newListItem = listItem(newItem);
-        
+
             cache.currentList.appendChild(newListItem.container);
 
             events.emit("listItemCreated", newListItem);
         }
     
         closeTaskCard();
+    }
+
+    function populateNavBarList() {
+        _allLists.forEach(curr => {
+            let newLi = document.createElement("li");
+            let newA = document.createElement("a");
+
+            newLi.appendChild(newA);
+
+            newA.classList.add("to-do-list");
+            newA.href = "#";
+            newA.textContent = curr.getName();
+
+            cache.projectsList.appendChild(newLi);
+        })
     }
 })();
 

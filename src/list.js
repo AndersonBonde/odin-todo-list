@@ -1,7 +1,10 @@
 import events from "./events";
 
-const list = () => {
+const list = (name) => {
     const items = [];
+    let _name = name;
+
+    const getName = () => _name;
 
     addListeners();
 
@@ -20,7 +23,8 @@ const list = () => {
     }
 
     return {
-        items
+        items,
+        getName
     }
 }
 
