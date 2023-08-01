@@ -16,6 +16,7 @@ const displayController = (() => {
         _currentList = list("To Do");
         _allLists.push(_currentList);
         populateNavBarList();
+        populateTaskListField();
 
         // Placeholder for test
         let newItem = todoItem("Placeholder", "Description for the placeholder task.");
@@ -210,6 +211,7 @@ const displayController = (() => {
         _allLists.push(newList);
 
         populateNavBarList();
+        populateTaskListField();
     }
 
     function enterKeyToSaveChanges(e) {
@@ -222,6 +224,21 @@ const displayController = (() => {
         if(e.code == "Delete" && cache.newTaskCard.style.display == "flex") {
             closeTaskCard();
         }
+    }
+
+    function populateTaskListField() {
+        clearAllTaskListField();
+
+        _allLists.forEach(curr => {
+            let option = document.createElement("option");
+
+            option.textContent = curr.getName();
+            cache.taskListField.appendChild(option);
+        })
+    }
+
+    function clearAllTaskListField() {
+        cache.taskListField.innerHTML = "";
     }
 })();
 
