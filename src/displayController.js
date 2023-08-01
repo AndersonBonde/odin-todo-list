@@ -19,7 +19,7 @@ const displayController = (() => {
         populateTaskListField();
 
         // Placeholder for test
-        let newItem = todoItem("Placeholder", "Description for the placeholder task.", "2023-10-13");
+        let newItem = todoItem("Placeholder", "Description for the placeholder task.", "2023-10-13", {"Placeholder check list": false});
         let newListItem = listItem(newItem);
         _currentList.items.push(newListItem);
         cache.currentList.appendChild(newListItem.container);
@@ -37,6 +37,8 @@ const displayController = (() => {
         obj.taskDescriptionField = document.querySelector("#description");
         obj.taskListField = document.querySelector("#list");
         obj.taskDateField = document.querySelector("#due-date");    
+        obj.checkList = document.querySelector(".checklist");
+        obj.addNewChecklistItemButton = document.querySelector("#new-checklist-item");
         obj.taskDeleteButton = document.querySelector("#delete");
         obj.taskSaveChangeButton = document.querySelector("#save-change");
     
@@ -48,6 +50,7 @@ const displayController = (() => {
         cache.addNewTaskButton.addEventListener("click", openCleanTaskCard);
         cache.taskDeleteButton.addEventListener("click", closeTaskCard);
         cache.taskSaveChangeButton.addEventListener("click", handleSaveChange);
+        cache.addNewChecklistItemButton.addEventListener("click", addNewChecklistItem);
 
         events.on("viewItem", openTaskCardWithInfo);
         events.on("deleteItem", deleteTask);
@@ -74,6 +77,11 @@ const displayController = (() => {
         cache.taskDescriptionField.value = "";
         cache.taskListField.value = "";
         cache.taskDateField.value = "";
+
+        let allCheckListItems = cache.checkList.querySelectorAll("li");
+        allCheckListItems.forEach(curr => {
+            cache.checkList.removeChild(curr);
+        });
     
         _currentDisplayedItemId = undefined;
     }
@@ -252,6 +260,10 @@ const displayController = (() => {
 
     function clearAllTaskListField() {
         cache.taskListField.innerHTML = "";
+    }
+
+    function addNewChecklistItem() {
+        console.log("Checklist button clicked.");
     }
 })();
 

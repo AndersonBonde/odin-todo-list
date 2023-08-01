@@ -49,6 +49,7 @@ nav h3 {
     font-size: 24px;
     border: none;
     background-color: lightskyblue;
+    color: white;
     border-radius: 50%;
 }
 
@@ -111,8 +112,8 @@ main {
 }
 
 #add-new-task:hover {
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: white;
     cursor: pointer;
 }
 
@@ -239,23 +240,23 @@ main {
     cursor: pointer;
 }
 
-.checklist-list {
+.checklist {
     list-style: none;
     padding-inline: 16px;
 }
 
-.checklist-list li {
+.checklist li {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.checklist-list input[type="checkbox"] {
+.checklist input[type="checkbox"] {
     width: 18px;
     height: 18px;
 }
 
-.checklist-list input[type="checkbox"]:hover {
+.checklist input[type="checkbox"]:hover {
     cursor: pointer;
 }
 
