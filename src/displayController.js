@@ -19,7 +19,7 @@ const displayController = (() => {
         populateTaskListField();
 
         // Placeholder for test
-        let newItem = todoItem("Placeholder", "Description for the placeholder task.");
+        let newItem = todoItem("Placeholder", "Description for the placeholder task.", "2023-10-13");
         let newListItem = listItem(newItem);
         _currentList.items.push(newListItem);
         cache.currentList.appendChild(newListItem.container);
@@ -58,18 +58,14 @@ const displayController = (() => {
     
     function openCleanTaskCard() {
         clearTaskCard();
-
-        cache.newTaskCard.style.display = "flex";
         taskCardFieldsSetup();
     }
     
     function openTaskCardWithInfo(id, item) {
         clearTaskCard();
-        
-        cache.newTaskCard.style.display = "flex";
         taskCardFieldsSetup();
-    
         loadItemToCard(item);
+        
         _currentDisplayedItemId = id;
     }
     
@@ -85,9 +81,11 @@ const displayController = (() => {
     function loadItemToCard(item) {
         cache.taskTitleField.value = item.getTitle();
         cache.taskDescriptionField.value = item.getDescription();
+        cache.taskDateField.value = item.getDueTime();
     }
-
+    
     function taskCardFieldsSetup() {
+        cache.newTaskCard.style.display = "flex";
         cache.taskTitleField.focus();
         cache.taskListField.value = _currentList.getName();
     }
@@ -146,9 +144,10 @@ const displayController = (() => {
     function createNewListItem() {
         let newTitle = cache.taskTitleField.value;
         let newDesc = cache.taskDescriptionField.value;
+        let newDueTime = cache.taskDateField.value;
     
         if(newTitle != "") {
-            let newItem = todoItem(newTitle, newDesc);
+            let newItem = todoItem(newTitle, newDesc, newDueTime);
             let newListItem = listItem(newItem);
 
             addNewListItemToSelectedList(newListItem);

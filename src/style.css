@@ -85,7 +85,6 @@ main {
 
 .current-list {
     position: relative;
-    background-color: blueviolet;
     padding: 16px;
     flex: 1;
     display: flex;
@@ -132,8 +131,14 @@ main {
     border-bottom: 1px solid #ccc;
 }
 
+.list-due-time {
+    margin-left: auto;
+    margin-right: 6px;
+}
+
 .list-item-buttons {
     display: flex;
+    align-items: center;
     gap: 4px;
 }
 
