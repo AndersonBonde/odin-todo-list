@@ -60,14 +60,14 @@ const displayController = (() => {
         clearTaskCard();
 
         cache.newTaskCard.style.display = "flex";
-        cache.taskTitleField.focus();
+        taskCardFieldsSetup();
     }
     
     function openTaskCardWithInfo(id, item) {
         clearTaskCard();
         
         cache.newTaskCard.style.display = "flex";
-        cache.taskTitleField.focus();
+        taskCardFieldsSetup();
     
         loadItemToCard(item);
         _currentDisplayedItemId = id;
@@ -85,6 +85,11 @@ const displayController = (() => {
     function loadItemToCard(item) {
         cache.taskTitleField.value = item.getTitle();
         cache.taskDescriptionField.value = item.getDescription();
+    }
+
+    function taskCardFieldsSetup() {
+        cache.taskTitleField.focus();
+        cache.taskListField.value = _currentList.getName();
     }
     
     function closeTaskCard() {
@@ -146,12 +151,18 @@ const displayController = (() => {
             let newItem = todoItem(newTitle, newDesc);
             let newListItem = listItem(newItem);
 
-            cache.currentList.appendChild(newListItem.container);
-
-            _currentList.items.push(newListItem);
+            addNewListItemToSelectedList(newListItem);
         }
     
         closeTaskCard();
+    }
+
+    function addNewListItemToSelectedList(listItem) {
+        let selectedList = cache.taskListField.value;
+        let list = _allLists.find(curr => curr.getName() == selectedList);
+
+        list.items.push(listItem);
+        loadCurrentList();
     }
 
     function populateNavBarList() {
@@ -233,8 +244,11 @@ const displayController = (() => {
             let option = document.createElement("option");
 
             option.textContent = curr.getName();
+            option.value = curr.getName();
             cache.taskListField.appendChild(option);
         })
+
+        cache.taskListField.value = "To Do";
     }
 
     function clearAllTaskListField() {
