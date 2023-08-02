@@ -100,6 +100,8 @@ const displayController = (() => {
     }
 
     function loadChecklistToCard(item) {
+        clearAllChecklistItems();
+
         let arr = item.getCheckList();
         
         arr.forEach((curr) => {
@@ -117,6 +119,14 @@ const displayController = (() => {
             newLabel.textContent = Object.keys(curr)[0];
 
             cache.checkList.insertBefore(newLi, cache.addNewChecklistItemButton);
+        })
+    }
+
+    function clearAllChecklistItems() {
+        let allItems = cache.checkList.querySelectorAll("li");
+
+        allItems.forEach(curr => {
+            cache.checkList.removeChild(curr);
         })
     }
     
@@ -175,9 +185,10 @@ const displayController = (() => {
         let newTitle = cache.taskTitleField.value;
         let newDesc = cache.taskDescriptionField.value;
         let newDueTime = cache.taskDateField.value;
+        let newChecklist = getChecklistFromCard();
     
         if(newTitle != "") {
-            let newItem = todoItem(newTitle, newDesc, newDueTime);
+            let newItem = todoItem(newTitle, newDesc, newDueTime, newChecklist);
             let newListItem = listItem(newItem);
 
             addNewListItemToSelectedList(newListItem);
@@ -192,6 +203,12 @@ const displayController = (() => {
 
         list.items.push(listItem);
         loadCurrentList();
+    }
+
+    function getChecklistFromCard() {
+        let item = _currentList.items.find(curr => curr.id == _currentDisplayedItemId);
+        let currChecklist = item.item.getCheckList();
+        return currChecklist;
     }
 
     function populateNavBarList() {
@@ -285,7 +302,14 @@ const displayController = (() => {
     }
 
     function addNewChecklistItem() {
-        console.log("Checklist button clicked.");
+        let item = _currentList.items.find(curr => curr.id == _currentDisplayedItemId);
+
+        let toAdd = prompt("New checklist item:", "");
+        let obj = {};
+        obj[toAdd] = false;
+        item.item.addToCheckList(obj);
+
+        loadChecklistToCard(item.item);
     }
 })();
 
