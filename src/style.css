@@ -172,6 +172,10 @@ main {
     cursor: pointer;
 }
 
+.late {
+    background-color: lightcoral;
+}
+
 /* New task */
 
 .task {

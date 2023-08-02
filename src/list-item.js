@@ -62,6 +62,8 @@ const listItem = (todoItem) => {
         let diff = dueDate.getTime() - today.getTime();
         let diffInDays = diff / (1000 * 3600 * 24);
 
+        if(diffInDays < 0) elements.container.classList.add("late");
+
         return `Due Time: ${diffInDays.toFixed(1)} days`;
     }
     
