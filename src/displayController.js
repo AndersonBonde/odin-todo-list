@@ -19,7 +19,7 @@ const displayController = (() => {
         populateTaskListField();
 
         // Placeholder for test
-        let newItem = todoItem("Placeholder", "Description for the placeholder task.", "2023-10-13", {"Placeholder check list": false});
+        let newItem = todoItem("Placeholder", "Description for the placeholder task.", "2023-10-13", [{"Placeholder check list": true}, {"Second item": false}]);
         let newListItem = listItem(newItem);
         _currentList.items.push(newListItem);
         cache.currentList.appendChild(newListItem.container);
@@ -68,6 +68,7 @@ const displayController = (() => {
         clearTaskCard();
         taskCardFieldsSetup();
         loadItemToCard(item);
+        loadChecklistToCard(item);
         
         _currentDisplayedItemId = id;
     }
@@ -96,6 +97,27 @@ const displayController = (() => {
         cache.newTaskCard.style.display = "flex";
         cache.taskTitleField.focus();
         cache.taskListField.value = _currentList.getName();
+    }
+
+    function loadChecklistToCard(item) {
+        let arr = item.getCheckList();
+        
+        arr.forEach((curr) => {
+            let newLi = document.createElement("li");
+            let newInput = document.createElement("input");
+            let newLabel = document.createElement("label");
+
+            newLi.appendChild(newInput);
+            newLi.appendChild(newLabel);
+
+            newInput.type = "checkbox";
+            newInput.id = Object.keys(curr)[0];
+            newInput.checked = Object.values(curr)[0];
+            newLabel.htmlFor = Object.keys(curr)[0];
+            newLabel.textContent = Object.keys(curr)[0];
+
+            cache.checkList.insertBefore(newLi, cache.addNewChecklistItemButton);
+        })
     }
     
     function closeTaskCard() {
