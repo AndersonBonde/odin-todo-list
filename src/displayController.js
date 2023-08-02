@@ -206,25 +206,18 @@ const displayController = (() => {
     }
 
     function getChecklistFromCard() {
-        let item = _currentList.items.find(curr => curr.id == _currentDisplayedItemId);
+        let checklist = [];
+        let allItems = cache.checkList.querySelectorAll("li");
 
-        if(item) {
-            let currChecklist = item.item.getCheckList();
-            return currChecklist;
-        } else {
-            let checklist = [];
-            let allItems = cache.checkList.querySelectorAll("li");
+        allItems.forEach(curr => {
+            let key = curr.querySelector("label").textContent;
+            let value = curr.querySelector("input").checked;
+            let obj = {};
+            obj[key] = value;
+            checklist.push(obj);
+        })
 
-            allItems.forEach(curr => {
-                let key = curr.querySelector("label").textContent;
-                let value = curr.querySelector("input").checked;
-                let obj = {};
-                obj[key] = value;
-                checklist.push(obj);
-            })
-
-            return checklist;
-        }
+        return checklist;
     }
 
     function populateNavBarList() {
@@ -318,31 +311,24 @@ const displayController = (() => {
     }
 
     function addNewChecklistItem() {
-        let item = _currentList.items.find(curr => curr.id == _currentDisplayedItemId);
-
         let toAdd = prompt("New checklist item:", "");
         let obj = {};
         obj[toAdd] = false;
 
-        if(item) {
-            item.item.addToCheckList(obj);
-            loadChecklistToCard(item.item);
-        } else {
-            let newLi = document.createElement("li");
-            let newInput = document.createElement("input");
-            let newLabel = document.createElement("label");
+        let newLi = document.createElement("li");
+        let newInput = document.createElement("input");
+        let newLabel = document.createElement("label");
 
-            newLi.appendChild(newInput);
-            newLi.appendChild(newLabel);
+        newLi.appendChild(newInput);
+        newLi.appendChild(newLabel);
 
-            newInput.type = "checkbox";
-            newInput.id = Object.keys(obj)[0];
-            newInput.checked = Object.values(obj)[0];
-            newLabel.htmlFor = Object.keys(obj)[0];
-            newLabel.textContent = Object.keys(obj)[0];
+        newInput.type = "checkbox";
+        newInput.id = Object.keys(obj)[0];
+        newInput.checked = Object.values(obj)[0];
+        newLabel.htmlFor = Object.keys(obj)[0];
+        newLabel.textContent = Object.keys(obj)[0];
 
-            cache.checkList.insertBefore(newLi, cache.addNewChecklistItemButton);
-        }
+        cache.checkList.insertBefore(newLi, cache.addNewChecklistItemButton);
     }
 })();
 
